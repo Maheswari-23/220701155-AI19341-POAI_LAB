@@ -1,0 +1,44 @@
+# Input the number of queens
+print("Enter the number of queens:")
+N = int(input())
+
+# Initialize the board
+board = [[0] * N for _ in range(N)]
+
+# Function to check if a queen can be attacked
+def attack(i, j):
+    # Check for any queen in the same row or column
+    for k in range(0, N):
+        if board[i][k] == 1 or board[k][j] == 1:
+            return True
+
+    # Check for any queen on the diagonals
+    for k in range(0, N):
+        for l in range(0, N):
+            if (k + l == i + j) or (k - l == i - j):
+                if board[k][l] == 1:
+                    return True
+    return False
+
+# Recursive function to solve the N-Queens problem
+def N_queens(n):
+    if n == 0:
+        return True  # All queens successfully placed
+
+    # Try placing a queen in each cell
+    for i in range(0, N):
+        for j in range(0, N):
+            if not attack(i, j) and board[i][j] != 1:
+                board[i][j] = 1  # Place queen
+                if N_queens(n - 1):  # Recursive call
+                    return True
+                board[i][j] = 0  # Backtrack if placing fails
+
+    return False  # No valid configuration found
+
+# Solve the problem and print the board
+if N_queens(N):
+    for row in board:
+        print(row)
+else:
+    print("No solution exists for", N, "queens.")
