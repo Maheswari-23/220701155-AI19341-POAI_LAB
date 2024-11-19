@@ -1,0 +1,33 @@
+# Function to perform DFS
+def dfs(graph, start, visited):
+    """
+    Perform DFS traversal of a graph starting from a given node.
+    :param graph: Dictionary representing an adjacency list
+    :param start: Starting node
+    :param visited: Set to keep track of visited nodes
+    """
+    if start not in visited:
+        print(start, end=" ")  # Process the current node
+        visited.add(start)  # Mark as visited
+
+        # Recur for all neighbors
+        for neighbor in graph[start]:
+            dfs(graph, neighbor, visited)
+
+# Example graph represented as an adjacency list
+graph = {
+    'A': ['B', 'C', 'E'],
+    'B': ['D', 'E'],
+    'C': ['G'],
+    'D': ['F'],
+    'E': [],
+    'F': [],
+    'G': []
+}
+
+# Initialize visited set
+visited = set()
+
+# Start DFS from node 'A'
+print("DFS Traversal starting from node 'A':")
+dfs(graph, 'A', visited)
