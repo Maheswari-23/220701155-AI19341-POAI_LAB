@@ -1,0 +1,47 @@
+def a_star(graph, start, goal):
+    # Track the shortest distance to each node
+    g_cost = {start: 0}
+    # Store the parent of each node for path reconstruction
+    came_from = {}
+    # Open list to explore nodes
+    open_list = [start]
+    
+    while open_list:
+        # Find the node with the smallest cost in the open list
+        current = min(open_list, key=lambda node: g_cost[node])
+        open_list.remove(current)
+
+        # If the goal is reached, reconstruct the path
+        if current == goal:
+            path = []
+            while current in came_from:
+                path.append(current)
+                current = came_from[current]
+            path.append(start)
+            return path[::-1]
+
+        # Explore neighbors
+        for neighbor, weight in graph[current]:
+            new_cost = g_cost[current] + weight
+            if neighbor not in g_cost or new_cost < g_cost[neighbor]:
+                g_cost[neighbor] = new_cost
+                came_from[neighbor] = current
+                if neighbor not in open_list:
+                    open_list.append(neighbor)
+    
+    return "No path found"
+
+# Example graph
+graph = {
+    'A': [('B', 1), ('C', 4)],
+    'B': [('A', 1), ('C', 2), ('D', 5)],
+    'C': [('A', 4), ('B', 2), ('D', 1)],
+    'D': [('B', 5), ('C', 1)]
+}
+
+start = 'A'
+goal = 'D'
+
+# Run the algorithm
+path = a_star(graph, start, goal)
+print("Shortest Path:", path)
