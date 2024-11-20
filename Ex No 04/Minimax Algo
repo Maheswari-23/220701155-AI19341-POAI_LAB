@@ -1,0 +1,34 @@
+def minimax(low,high,actual,depth=0):
+    if low>high:
+        return None,depth
+    mid=(low+high)//2
+    if(mid==actual):
+        return mid,depth
+    if(mid<actual):
+        return minimax(mid+1,high,actual,depth+1)
+    else:
+         return minimax(low,mid-1,actual,depth+1)
+def num_game():
+    print("ENTER A NUMBER LET AI GUESS IT")
+    actual=int(input("Enter a number"))
+    if not(1<=actual<=100):
+       print("Enter a number between 1 and 100")
+       return
+    low=1
+    high=100
+    while True:
+       guess,depth=minimax(low,high,actual)
+       print(f"AI guess {guess}"  )
+
+
+       if(guess==actual):
+             print(f"AI guessed {actual} in correctly in {depth +1}trials")
+             break
+       elif(guess<actual):
+           print(f"{guess}is too low")
+           low=guess+1
+       else:
+           print(f"{guess}is too high")
+           high=guess-1
+if __name__=='__main__':
+   num_game()
