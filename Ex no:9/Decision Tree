@@ -1,0 +1,35 @@
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+import numpy as np
+
+# Dummy data for classification
+X = np.array([
+    [7, 7],  # Sweetness, Crunchiness
+    [8, 6],
+    [5, 4],
+    [3, 8],
+    [2, 9]
+])  # Features
+y = np.array([0, 0, 1, 1, 1])  # Labels: 0 for Apple, 1 for Orange
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4, random_state=42)
+
+# Create the Decision Tree Classifier
+model = DecisionTreeClassifier()
+
+# Train the model on the training set
+model.fit(X_train, y_train)
+
+# Test the model on the testing set
+y_pred = model.predict(X_test)
+
+# Evaluate the model
+accuracy = accuracy_score(y_test, y_pred)
+print("Accuracy:", accuracy)
+
+# Predict a new sample
+test_data = np.array([[6, 6]])  # Test sample
+new_prediction = model.predict(test_data)
+print("Predicted Class for New Data:", new_prediction[0])
